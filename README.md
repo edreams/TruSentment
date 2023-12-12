@@ -31,7 +31,6 @@ pip install -e .
 
 Once TruLens is installed, you can run the application as follows:
 
-
 streamlit run trusent1.py
 
 ## Additional Resources
