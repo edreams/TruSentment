@@ -1,0 +1,8 @@
+# Ignore .env files
+*.env
+
+# Ignore .json files
+*.json
+
+# Ignore myenv directory
+myenv/

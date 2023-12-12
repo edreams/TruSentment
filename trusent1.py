@@ -36,7 +36,7 @@ def setup_page():
             'About': "# This is a header. This is an *extremely* cool app!"
         }
     )
-    logo_path='/home/edreams_consultores/dev6/img/trusent.png'
+    logo_path='./img/trusent.png'
     st.image(logo_path, use_column_width='auto')
 
     st.markdown("""
@@ -110,9 +110,9 @@ def process_uploaded_file(uploaded_file):
             loader = JsonDataReader()
             return loader.load_data(data)
         else:
-            with open("/home/edreams_consultores/dev6/tmp/tempfile", "wb") as f:
+            with open("./tmp/tempfile", "wb") as f:
                 f.write(uploaded_file.getbuffer())
-            reader = SimpleDirectoryReader("/home/edreams_consultores/dev6/tmp/", recursive=True)
+            reader = SimpleDirectoryReader("./tmp/", recursive=True)
             return reader.load_data()
     return None
 
@@ -256,7 +256,25 @@ def generate_model_table(openai_cr, openai_g, vertex_cr, vertex_g):
 def main():
     setup_page()
     st.title('TruSentment Analyzer')
-    uploaded_file = st.file_uploader("Upload a file", type=None)
+
+    # Option for the user to select the default file or upload their own
+    default_file_path = './msft/789019_10K_2023_0000950170-23-035122.json'
+    file_selection = st.radio("Choose your file source", ("Use default file MSFT 10-k report", "Upload my file"))
+
+    if file_selection == "Use default file MSFT 10-k report":
+        # Directly read the default file
+        with open(default_file_path, 'r') as file:
+            data = json.load(file)
+        secdocuments = data  # Data from the default file
+    else:
+        uploaded_file = st.file_uploader("Upload a file", type=None)
+        if uploaded_file is not None:
+            # Process uploaded file
+            with open("./tmp/tempfile", "wb") as f:
+                f.write(uploaded_file.getbuffer())
+            secdocuments = SimpleDirectoryReader("./tmp/", recursive=True).load_data()
+
+
     user_input = st.text_area("Write your prompts here, One for line")
     if user_input:
         test_prompts = user_input.split("\n")  
@@ -266,7 +284,6 @@ def main():
             
             init_vars()  
 
-            secdocuments = process_uploaded_file(uploaded_file)
             #Parte 1
             index= parte1(secdocuments=secdocuments,embed_model=st.session_state['embed_v12'], llm=st.session_state['openai_llm'],dim=dim_v12)
             query_engine = index.as_query_engine(top_k=3)
@@ -282,7 +299,7 @@ def main():
             
             #Parte 4
             parte4(llms=st.session_state['llms'],secdocuments=secdocuments,test_prompts=test_prompts)
-        st.success('¡Execution Completed!')    
+        st.success('Execution Completed!')    
           
             
         #Parte 5
