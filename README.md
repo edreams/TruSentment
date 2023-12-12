@@ -19,7 +19,6 @@
 </body>
 </html>
 
-## Installation
 
 To set up TruLens on your local machine, follow these steps:
 
