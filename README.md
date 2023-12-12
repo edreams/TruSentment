@@ -22,7 +22,7 @@
 
 To set up TruLens on your local machine, follow these steps:
 
-```bash
+
 git clone https://github.com/truera/trulens.git
 cd trulens/trulens_eval
 pip install -e .
@@ -31,7 +31,7 @@ pip install -e .
 
 Once TruLens is installed, you can run the application as follows:
 
-```bash
+
 streamlit run trusent1.py
 
 ## Additional Resources
