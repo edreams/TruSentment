@@ -1,0 +1,22 @@
+google-cloud-aiplatform
+litellm
+trulens_eval==0.17.0
+langchain
+llama_index==0.8.62
+llama-hub
+nltk
+html2text
+tenacity
+wikipedia
+grpcio
+protobuf
+openai==0.27.6
+pymilvus
+grpcio
+
+# then you have to do this:
+
+# pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+
+
+# pip install --no-deps sentence-transformers
